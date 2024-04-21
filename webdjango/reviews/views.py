@@ -1,8 +1,7 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Review, Wine
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Review, Wine,Cluster
+from .models import Review,Wine ,Cluster
 from django.contrib.auth.models import User
 from .forms import ReviewForm
 from .suggestions import update_clusters
@@ -38,14 +37,14 @@ def add_review(request, wine_id):
     wine = get_object_or_404(Wine, pk=wine_id)
     form = ReviewForm(request.POST)
     if form.is_valid():
-        rating = form.cleaned_data['rating']
-        comment = form.cleaned_data['comment']
-        user_name = request.user.username
+        #rating = form.cleaned_data['rating']
+        #comment = form.cleaned_data['comment']
+        #user_name = request.user.username
         review = Review()
         review.wine = wine
-        review.user_name = user_name
-        review.rating = rating
-        review.comment = comment
+        review.user_name = request.user.username
+        review.rating = form.cleaned_data['rating']
+        review.comment = form.cleaned_data['comment']
         review.pub_date = datetime.datetime.now()
         review.save()
         update_clusters()
