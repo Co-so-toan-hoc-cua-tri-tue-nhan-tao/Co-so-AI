@@ -13,5 +13,5 @@ class ClusterAdmin(admin.ModelAdmin):
     list_display = ['name','get_members']
 
 admin.site.register(Wine)
-admin.site.register(Review,ReviewAdmin)
-admin.site.register(Cluster,ClusterAdmin)
+admin.site.register(Review)
+admin.site.register(Cluster)
