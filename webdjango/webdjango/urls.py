@@ -55,7 +55,7 @@ urlpatterns = [
     path('profiles/', include('profiles.urls')),
     path('markdownx/', include('markdownx.urls')),
     path('order/', include('order.urls'),name="order"),
-    path('tfidf/', include('tfidf.urls')),
+    path('tfidf/', include(('tfidf.urls'), namespace='tfidf')),
     path('matrixfactorization/', include(('matrixfactorization.urls'),namespace='matrixfactorization')),
 
 ]

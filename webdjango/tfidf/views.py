@@ -254,8 +254,8 @@ def post_list(request):
 @login_required
 def get_suggestions(request):
     num_reviews = Review.objects.count()
-    all_user_names = list(map(lambda x: x.username, User.objects.only("username")))
-    all_product_ids = set(map(lambda x: x.product.id, Review.objects.only("product")))
+    all_user_names = list(map(lambda x: x, User.objects.only("username")))
+    all_product_ids = set(map(lambda x: x.id, Review.objects.only("product")))
     num_users = len(list(all_user_names))
     print(num_users)
     productRatings_m = sp.sparse.dok_matrix((num_users, max(all_product_ids) + 1), dtype=np.float32)
