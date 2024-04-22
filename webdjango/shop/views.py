@@ -15,6 +15,7 @@ from order.models import ShopCartForm
 from .forms import ReviewForm
 from .suggestions import update_clusters
 from .models import Category, Product, SubCategory, Slider, Review, Cluster
+from profiles.models import Profile
 
 
 def signup(request):
@@ -27,6 +28,11 @@ def signup(request):
             except User.DoesNotExist:
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'],
                                                 email=request.POST['email'])
+                
+                # Tạo Profile mới
+                email = request.POST['email']
+                username = request.POST['username']
+                profile = Profile.objects.create(user=user, first_name=username,email=email)  # Tạo profile cho người dùng mới
 
                 return redirect("shop:index")
         else:
@@ -34,6 +40,24 @@ def signup(request):
 
     else:
         return render(request, 'Register.html')
+
+# def signup(request):
+#     if request.method == "POST":
+#         # creating a user
+#         if request.POST['password'] == request.POST['repeatpassword']:
+#             try:
+#                 user = User.objects.get(username=request.POST['username'])
+#                 return render(request, 'Register.html', {'error': "User already exist"})
+#             except User.DoesNotExist:
+#                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'],
+#                                                 email=request.POST['email'])
+
+#                 return redirect("shop:index")
+#         else:
+#             return render(request, 'Register.html', {'error': "Password Don't match"})
+
+#     else:
+#         return render(request, 'Register.html')
 
 
 def user_login(request):
@@ -60,7 +84,8 @@ def index(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     slider = Slider.objects.all()
-    electronics = SubCategory.objects.filter(Q(category_id=1))
+    #electronics = SubCategory.objects.filter(Q(category_id=1))
+    electronics = {}
     products = Product.objects.filter(available=True).order_by('-created')
     paginator = Paginator(products, 3)
     page = request.GET.get('page')
