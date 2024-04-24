@@ -179,11 +179,11 @@
 
                         <li class="text-center border-right text-white"><a href="#" class="text-white">	<i class="fas fa-language mr-2"></i> E-COMMERSCE</a></li>
 						<li class="text-center border-right text-white">
-							<a href="" class="text-white"><i class="fas fa-truck mr-2"></i> bla bla</a>
+							<a href="" class="text-white"><i class="fas fa-truck mr-2"></i> Vận chuyển</a>
 						</li>
 						<li class="text-center border-right text-white">
 							<a href="{% url 'order:orderindex' %}" class="text-white">
-								<i class="fas fa-phone mr-2"></i> My order</a></li>
+								<i class="fas fa-phone mr-2"></i> Đơn hàng </a></li>
 
 						{% if request.user.is_authenticated %}
 						<li class="text-center border-right text-white">
@@ -192,18 +192,18 @@
 						</li>
 						<li class="text-center  boarder-right text-white">
 							<a href="{% url 'shop:logout' %}"  class="text-white">
-								<i class="fas fa-sign-out-alt mr-2"></i>Log out </a>
+								<i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất </a>
 						</li>
 						{% else %}
 						<li class="text-center border-right text-white">
 							<i class="fas fa-phone mr-2"></i> vnu.edu.vn</li>
 						<li class="text-center border-right text-white">
 							<a href="{% url 'shop:login' %}"  class="text-white">
-								<i class="fas fa-sign-in-alt mr-2"></i> Sign in </a>
+								<i class="fas fa-sign-in-alt mr-2"></i> Đăng Nhập </a>
 						</li>
 						<li class="text-center  boarder-right text-white">
 							<a href="{% url 'shop:signup' %}"  class="text-white">
-								<i class="fas fa-sign-out-alt mr-2"></i>Sign up</a>
+								<i class="fas fa-sign-out-alt mr-2"></i> Đăng ký</a>
 						</li>
 					{% endif %}
 					</ul>
@@ -238,7 +238,7 @@
 						<div class="col-10 agileits_search">
 							<form class="form-inline" action='{% url "shop:query" %}' method="GET">
 								<input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search" required>
-								<button class="btn my-2 my-sm-0" type="submit">Search</button>
+								<button class="btn my-2 my-sm-0" type="submit">Tìm kiếm</button>
 							</form>
 						</div>
 

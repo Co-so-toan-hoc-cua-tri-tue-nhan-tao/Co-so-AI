@@ -7,23 +7,23 @@
 </div>
 
 
-	<div class="container-fluid">
+	<div class="container">
     
     <!-- Movie list -->
-    <div class="row">
+    <div class="gallery">
             {% if movie_list %}
             {% for movie in movie_list %}
                 <div class="col-sm-2 col-md-2 ">
                     <div class="thumbnail">
                         <h4>{{movie.title}}</h4>
-                        <a href="{% url 'detail' movie.id %}">
-                            <img src="{{ movie.movie_logo.url}}" class="img-responsive">
+                        <a href="{% url 'shop:product_detail' product_id=movie.id %}">
+                            <img src="{{ movie.image.url}}" class="img-responsive">
                         </a>
                         <h5>{{movie.genre}}</h5>
                         <div class="caption">
 
                             <!-- View Details -->
-                            <a href="{% url 'detail' movie.id %}" class="btn btn-primary btn-sm" role="button">Give Rating</a>
+                            <a href="{% url 'shop:product_detail' product_id=movie.id %}" class="btn btn-primary btn-sm" role="button">Give Rating</a>
 
                                         
                         </div>

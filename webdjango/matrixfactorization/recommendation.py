@@ -43,12 +43,19 @@ def Myrecommend():
         return flattenParams(Xgrad, Thetagrad)
 
     df = pd.DataFrame(list(Review.objects.all().values()))
-    mynu = df.user_id.unique().shape[0]
-    mynm = df.movie_id.unique().shape[0]
+    # mynu = df.user_id.unique().shape[0]
+    mynu = df.user_name.unique().shape[0]
+    # mynm = df.movie_id.unique().shape[0]
+    mynm = df.product_id.unique().shape[0]
     mynf = 10
     Y = np.zeros((mynm, mynu))
+    user_to_column = {}  # Tạo một bản đồ từ tên người dùng sang chỉ số cột
+    # Duyệt qua tất cả các người dùng trong dataframe và gán mỗi tên người dùng với một chỉ số cột
+    for idx, user_name in enumerate(df['user_name'].unique()):
+        user_to_column[user_name] = idx
     for row in df.itertuples():
-        Y[row[2] - 1, row[4] - 1] = row[3]
+        # Y[row[2] - 1, row[4] - 1] = row[3]
+        Y[int(row[1])-1 ,  user_to_column[row[4]] ] = row[6]
     R = np.zeros((mynm, mynu))
     for i in range(Y.shape[0]):
         for j in range(Y.shape[1]):

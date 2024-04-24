@@ -20,7 +20,7 @@ def recommend(request):
         raise Http404
     df = pd.DataFrame(list(Review.objects.all().values()))
     nu = df.user_name.unique().shape[0]
-    current_user_id = request.user_id
+    current_user_id = request.user.id
     # # if new user not rated any movie
     # if user_name > nu:
     #     product = Product.objects.get(id=15)

@@ -177,33 +177,33 @@
 					<ul>
 
 
-                        <li class="text-center border-right text-white"><a href="#" class="text-white">	<i class="fas fa-language mr-2"></i> the-Middles</a></li>
+                        <li class="text-center border-right text-white"><a href="#" class="text-white">	<i class="fas fa-language mr-2"></i> E-COMMERSCE</a></li>
 						<li class="text-center border-right text-white">
-							<a href="" class="text-white"><i class="fas fa-truck mr-2"></i> bla bla</a>
+							<a href="" class="text-white"><i class="fas fa-truck mr-2"></i> Vận chuyển</a>
 						</li>
 						<li class="text-center border-right text-white">
-							<a href="{% url 'checkout' %}" class="text-white">
-								<i class="fas fa-phone mr-2"></i> My order</a></li>
+							<a href="{% url 'order:orderindex' %}" class="text-white">
+								<i class="fas fa-phone mr-2"></i> Đơn hàng </a></li>
 
 						{% if request.user.is_authenticated %}
 						<li class="text-center border-right text-white">
-							<a href="{% url 'profiles:profile' profile_slug=request.user.profile.slug %}" class="text-white">
-								<i class="fa fa-user"></i> {{ request.user}} </a>
+							<a href="{{ request.user.profile.get_absolute_url }}" class="text-white">
+								<i class="fa fa-user"></i> {{ request.user.username}} </a>
 						</li>
 						<li class="text-center  boarder-right text-white">
 							<a href="{% url 'shop:logout' %}"  class="text-white">
-								<i class="fas fa-sign-out-alt mr-2"></i>Log out </a>
+								<i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất </a>
 						</li>
 						{% else %}
 						<li class="text-center border-right text-white">
-							<i class="fas fa-phone mr-2"></i> 0000000000</li>
+							<i class="fas fa-phone mr-2"></i> vnu.edu.vn</li>
 						<li class="text-center border-right text-white">
 							<a href="{% url 'shop:login' %}"  class="text-white">
-								<i class="fas fa-sign-in-alt mr-2"></i> Sign in </a>
+								<i class="fas fa-sign-in-alt mr-2"></i> Đăng Nhập </a>
 						</li>
 						<li class="text-center  boarder-right text-white">
 							<a href="{% url 'shop:signup' %}"  class="text-white">
-								<i class="fas fa-sign-out-alt mr-2"></i>Sign up</a>
+								<i class="fas fa-sign-out-alt mr-2"></i> Đăng ký</a>
 						</li>
 					{% endif %}
 					</ul>
@@ -238,7 +238,7 @@
 						<div class="col-10 agileits_search">
 							<form class="form-inline" action='{% url "shop:query" %}' method="GET">
 								<input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search" required>
-								<button class="btn my-2 my-sm-0" type="submit">Search</button>
+								<button class="btn my-2 my-sm-0" type="submit">Tìm kiếm</button>
 							</form>
 						</div>
 
@@ -246,8 +246,8 @@
 						<!-- cart details -->
 						<div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
 							<div class="wthreecartaits wthreecartaits2 cart cart box_1">
-
-									<div href="#"><button class="btn w3view-cart" type="submit" name="submit" value="">
+								      <span class="qty" style="color:white">{{request.session.cart_items}}</span>
+									  <a href="{% url 'order:shopcart' %}"><button class="btn w3view-cart" type="submit" name="submit" value="">
 										<i class="fas fa-cart-arrow-down"></i>
 									</button>
 									</div>
@@ -327,75 +327,75 @@
 										<div class="col-sm-3 multi-gd-img">
 											<ul class="multi-column-dropdown">
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Laptops' %}">Laptops</a>
+													<a href="{% url 'shop:product_list_by_category' category_slug='Laptops' %}">Laptops</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Drives & Storage' %}">Drives & Storage</a>
+													<a href="{% url 'shop:product_list_by_category' category_slug='DrivesStorage' %}">Drives & Storage</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Printers & Ink' %}">Printers & Ink</a>
+													<a href="{% url 'shop:product_list_by_category' category_slug='PrintersInk' %}">Printers & Ink</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Networking Devices' %}">Networking Devices</a>
+													<a href="{% url 'shop:product_list_by_category' category_slug='NetworkingDevices' %}">Networking Devices</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Computer Accessories' %}">Computer Accessories</a>
+													<a href="{% url 'shop:product_list_by_category' category_slug='ComputerAccessories' %}">Computer Accessories</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Game Zone' %}">Game Zone</a>
+													<a href="{% url 'shop:product_list_by_category' category_slug='GameZone' %}">Game Zone</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Software' %}"></a>Software</a>
-												</li>
-											</ul>
-										</div>
-										<div class="col-sm-3 multi-gd-img">
-											<ul class="multi-column-dropdown">
-												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Laptops' %}">Laptops</a>
-												</li>
-												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Drives & Storage' %}">Drives & Storage</a>
-												</li>
-												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Printers & Ink' %}">Printers & Ink</a>
-												</li>
-												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Networking Devices' %}">Networking Devices</a>
-												</li>
-												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Computer Accessories' %}">Computer Accessories</a>
-												</li>
-												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Game Zone' %}">Game Zone</a>
-												</li>
-												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Software' %}"></a>Software</a>
+													<a href="{% url 'shop:product_list_by_category' category_slug='Software' %}"></a>Software</a>
 												</li>
 											</ul>
 										</div>
 										<div class="col-sm-3 multi-gd-img">
 											<ul class="multi-column-dropdown">
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Laptops' %}">Laptops</a>
+													<a href="">Laptops</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Drives & Storage' %}">Drives & Storage</a>
+													<a href="">Drives & Storage</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Printers & Ink' %}">Printers & Ink</a>
+													<a href="">Printers & Ink</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Networking Devices' %}">Networking Devices</a>
+													<a href="">Networking Devices</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Computer Accessories' %}">Computer Accessories</a>
+													<a href="">Computer Accessories</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Game Zone' %}">Game Zone</a>
+													<a href="">Game Zone</a>
 												</li>
 												<li>
-													<a href="{% url 'product_list_by_category' category_slug='Software' %}"></a>Software</a>
+													<a href="">Software</a>
+												</li>
+											</ul>
+										</div>
+										<div class="col-sm-3 multi-gd-img">
+											<ul class="multi-column-dropdown">
+												<li>
+													<a href="">Laptops</a>
+												</li>
+												<li>
+													<a href="">Drives & Storage</a>
+												</li>
+												<li>
+													<a href="">Printers & Ink</a>
+												</li>
+												<li>
+													<a href="">Networking Devices</a>
+												</li>
+												<li>
+													<a href="">Computer Accessories</a>
+												</li>
+												<li>
+													<a href="">Game Zone</a>
+												</li>
+												<li>
+													<a href="">Software</a>
 												</li>
 											</ul>
 										</div>
@@ -489,7 +489,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="">Contact Us</a>
+							<a class="nav-link" href="#">Contact Us</a>
 						</li>
 					</ul>
 				</div>
@@ -626,7 +626,7 @@
 	{% endfor %}
 </a>
 {% else %}
-    <p>No products are available.</p>
+    <p> Hiện không có sản phẩm nào </p>
 {% endif %}
 
 </div>
