@@ -67,7 +67,8 @@ def user_login(request):
         user = auth.authenticate(username=uname, password=pwd)
         if user is not None:
             auth.login(request, user)
-            return render(request, 'index.html', {'error': "Invalid Login"})
+            #return render(request, 'index.html', {'error': "Invalid Login"})
+            return redirect("shop:index")
 
         else:
             return render(request, 'login.html', {'error': "Invalid Login "})
