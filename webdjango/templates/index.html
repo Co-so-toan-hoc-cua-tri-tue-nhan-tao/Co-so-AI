@@ -183,7 +183,7 @@
 						</li>
 						<li class="text-center border-right text-white">
 							<a href="{% url 'order:orderindex' %}" class="text-white">
-								<i class="fas fa-phone mr-2"></i> Đơn hàng </a></li>
+								<i class="fas fa-phone mr-2"></i> Đơn hàng</a></li>
 
 						{% if request.user.is_authenticated %}
 						<li class="text-center border-right text-white">
@@ -192,18 +192,18 @@
 						</li>
 						<li class="text-center  boarder-right text-white">
 							<a href="{% url 'shop:logout' %}"  class="text-white">
-								<i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất </a>
+								<i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất </a>
 						</li>
 						{% else %}
 						<li class="text-center border-right text-white">
 							<i class="fas fa-phone mr-2"></i> vnu.edu.vn</li>
 						<li class="text-center border-right text-white">
 							<a href="{% url 'shop:login' %}"  class="text-white">
-								<i class="fas fa-sign-in-alt mr-2"></i> Đăng Nhập </a>
+								<i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập </a>
 						</li>
 						<li class="text-center  boarder-right text-white">
 							<a href="{% url 'shop:signup' %}"  class="text-white">
-								<i class="fas fa-sign-out-alt mr-2"></i> Đăng ký</a>
+								<i class="fas fa-sign-out-alt mr-2"></i> Đăng ký </a>
 						</li>
 					{% endif %}
 					</ul>
@@ -238,7 +238,7 @@
 						<div class="col-10 agileits_search">
 							<form class="form-inline" action='{% url "shop:query" %}' method="GET">
 								<input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search" required>
-								<button class="btn my-2 my-sm-0" type="submit">Tìm kiếm</button>
+								<button class="btn my-2 my-sm-0" type="submit"> Tìm Kiếm </button>
 							</form>
 						</div>
 

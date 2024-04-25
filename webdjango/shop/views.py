@@ -70,7 +70,7 @@ def user_login(request):
             return render(request, 'index.html', {'error': "Invalid Login"})
 
         else:
-            return render(request, 'login.html', {'error': "Invalid Login"})
+            return render(request, 'login.html', {'error': "Invalid Login "})
     else:
         return render(request, 'login.html')
 

@@ -1,7 +1,6 @@
 from django.db import models
 import numpy as np
 from django.contrib.auth.models import User
-from shop.models import Product
 class Wine(models.Model):
     name = models.CharField(max_length=200)
 
@@ -20,8 +19,6 @@ class Review(models.Model):
         (5,'5'),
     )
     wine = models.ForeignKey(Wine,on_delete = models.DO_NOTHING)
-    # product=models.Foreginkey(Product,on_delete=models.DO_NOTHING)
-
     pub_date = models.DateTimeField('date published')
     user_name = models.CharField(max_length=100)
     comment = models.CharField(max_length=200)

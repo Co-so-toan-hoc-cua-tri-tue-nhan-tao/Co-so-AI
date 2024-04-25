@@ -63,7 +63,7 @@ def getFrames():
     #                      for i in similar_indices]
 
     #     results[product.id] = similar_items[1:]
-    # return results
+    return results
 
 def recommend(item_id, num, results):
     ids = []

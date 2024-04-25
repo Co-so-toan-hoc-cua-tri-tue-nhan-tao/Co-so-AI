@@ -1,8 +1,6 @@
 from django.test import TestCase
 
 
-
-
 """
 from django.test import TestCase
 from .models import Wine, Review, Cluster
@@ -19,18 +17,24 @@ class YourAppNameTestCase(TestCase):
         Review.objects.create(user_name='user1', wine=self.wine1, rating=4)
         Review.objects.create(user_name='user2', wine=self.wine1, rating=5)
 
-    def test_review_str_method(self):
-        # Kiểm tra phương thức __str__ của đối tượng Review
-        review = Review.objects.get(rating=4)
-        self.assertEqual(str(review), f"{review.wine.name} - {review.rating}")
+    def test_average_rating(self):
+        # Kiểm tra phương thức average_rating của đối tượng Wine
+        wine1 = Wine.objects.get(name='Wine 1')
+        self.assertEqual(wine1.average_rating(), 4.5)
 
-    def test_cluster_member_display(self):
-        # Kiểm tra hiển thị các thành viên của cụm
+    def test_cluster_creation(self):
+        # Kiểm tra tạo cụm
+        Cluster.objects.create(name='Test Cluster')
+        self.assertEqual(Cluster.objects.count(), 1)
+
+    def test_cluster_member_count(self):
+        # Kiểm tra số lượng thành viên trong cụm
         cluster = Cluster.objects.create(name='Test Cluster')
         cluster.users.add(self.user1)
         cluster.users.add(self.user2)
-        self.assertEqual(cluster.get_members(), "user1\nuser2")
+        self.assertEqual(cluster.get_member_count(), 2)
 
-    # Bổ sung các hàm kiểm tra khác nếu cần thiết
+    # Bổ sung các bài kiểm tra khác nếu cần thiết
+
 
 """
