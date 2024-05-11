@@ -86,4 +86,5 @@ def update_clusters():
             new_clusters[cluster_label].users.add(User.objects.get(username=user_name))
 
         print(new_clusters)
+    
 """

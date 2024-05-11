@@ -104,3 +104,23 @@ def user_recommendation_list(request):
         'user_recommendation_list.html',
         {'username': request.user.username,'wine_list': wine_list}
 )
+
+'''
+def toggle_mode(self):
+		if self.actionMode.isChecked():  # Nếu đang ở chế độ tối
+			self.setStyleSheet("background-color: #222; color: #FFF;")
+		else:  # Nếu đang ở chế độ sáng
+			self.setStyleSheet("")  # Đặt lại stylesheet về mặc định
+
+def fontColor(self):
+		color = QtWidgets.QColorDialog.getColor(self.currentFontColor)
+		if color.isValid():
+			self.currentFontColor = color
+			self.textEdit.setTextColor(color)
+
+	def highlight(self):
+		color = QtWidgets.QColorDialog.getColor(self.currentHighlightColor)
+		if color.isValid():
+			self.currentHighlightColor = color
+			self.textEdit.setTextBackgroundColor(color)
+'''
