@@ -161,4 +161,95 @@ def set_light_mode(self):
     for action in self.toolBar.actions():
         action.setStyleSheet("")
 
+def audio_to_text(self):
+    # Mở cửa sổ để chọn file âm thanh
+    filename, _ = QFileDialog.getOpenFileName(None, "Select Audio File", "", "Audio Files (*.wav *.mp3)")
+
+    if filename == "":
+        return
+
+    try:
+        # Chuyển đổi file mp3 thành WAV để nhận dạng âm thanh
+        sound = AudioSegment.from_mp3(filename)
+        filename_wav = filename[:-4] + ".wav"
+        sound.export(filename_wav, format="wav")
+
+        # Sử dụng thư viện SpeechRecognition để nhận dạng âm thanh
+        recognizer = sr.Recognizer()
+        with sr.AudioFile(filename_wav) as source:
+            audio_data = recognizer.record(source)
+            text = recognizer.recognize_google(audio_data)
+
+        # Thêm văn bản nhận dạng được vào cuối textEdit
+        self.textEdit.moveCursor(QtGui.QTextCursor.End)
+        self.textEdit.insertPlainText(text)
+
+    except Exception as e:
+        # Nếu có lỗi, thông báo cho người dùng
+        QMessageBox.warning(None, "Error", str(e))
+
+def start_spell_check_timer(self):
+    if self.spell_check_checked:
+        self.spell_check_timer.start(1000) 
+def stop_spell_check_timer(self):
+    self.spell_check_timer.stop() 
+
+def check_spelling(self):
+    self.spell_check_timer.stop()  # Dừng bộ đếm thời gian
+    cursor = self.textEdit.textCursor()
+    cursor_pos = cursor.position()  # Lưu lại vị trí của con trỏ
+
+    # Lấy văn bản trong textEdit
+    text = self.textEdit.toPlainText()
+
+    # Tạo một danh sách để lưu trữ màu chữ của từng phần văn bản
+    char_formats = []
+
+    # Tách văn bản thành các từ và kiểm tra chính tả
+    for start_pos, end_pos, word in self.iterate_words(text):
+        if not self.spell_checker.check(word):
+            # Nếu từ không đúng chính tả, lưu màu chữ hiện tại và áp dụng gạch chân nhiễu
+            cursor.setPosition(start_pos)
+            cursor.movePosition(QtGui.QTextCursor.Right, QtGui.QTextCursor.KeepAnchor, end_pos - start_pos)
+            char_format = cursor.charFormat()
+            char_formats.append((start_pos, char_format.foreground()))  # Lưu trữ màu chữ hiện tại
+            char_format.setUnderlineStyle(QtGui.QTextCharFormat.SpellCheckUnderline)
+            char_format.setUnderlineColor(Qt.red)  # Đặt màu gạch chân nhiễu là màu đỏ
+            cursor.setCharFormat(char_format)
+        else:
+            char_formats.append(None)  # Không áp dụng gạch chân nhiễu, để màu chữ không thay đổi
+
+    # Khôi phục màu chữ ban đầu cho các từ không cần áp dụng gạch chân nhiễu
+    for i, char_format in enumerate(char_formats):
+        if char_format is None:
+            continue
+        start_pos, color = char_format
+        cursor.setPosition(start_pos)
+        cursor.movePosition(QtGui.QTextCursor.Right, QtGui.QTextCursor.KeepAnchor, 1)
+        char_format = cursor.charFormat()
+        char_format.setForeground(color)  # Thiết lập màu chữ trở lại
+        cursor.setCharFormat(char_format)
+
+    # Khôi phục vị trí của con trỏ
+    cursor.setPosition(cursor_pos)
+
+
+
+def iterate_words(self, text):
+    """
+    Hàm này tách văn bản thành các từ và trả về vị trí bắt đầu và kết thúc của từ trong văn bản cùng với từ đó.
+    """
+    in_word = False
+    start_pos = 0
+    for pos, char in enumerate(text):
+        if char.isalnum():
+            if not in_word:
+                start_pos = pos
+                in_word = True
+        else:
+            if in_word:
+                yield start_pos, pos, text[start_pos:pos]
+                in_word = False
+    if in_word:
+        yield start_pos, len(text), text[start_pos:]
 '''
