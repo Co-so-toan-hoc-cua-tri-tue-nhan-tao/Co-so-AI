@@ -123,4 +123,14 @@ def fontColor(self):
 		if color.isValid():
 			self.currentHighlightColor = color
 			self.textEdit.setTextBackgroundColor(color)
+
+def search_text(self):
+		search_text, ok = QtWidgets.QInputDialog.getText(self.centralwidget, 'Search Text', 'Enter text to search:')
+		if ok and search_text:
+			cursor = self.textEdit.textCursor()
+			cursor.movePosition(QtGui.QTextCursor.Start)
+			cursor = self.textEdit.document().find(search_text, cursor)
+			if not cursor.isNull():
+				self.textEdit.setTextCursor(cursor)
+				self.textEdit.ensureCursorVisible()
 '''
