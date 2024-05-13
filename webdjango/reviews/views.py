@@ -161,33 +161,6 @@ def set_light_mode(self):
     for action in self.toolBar.actions():
         action.setStyleSheet("")
 
-def audio_to_text(self):
-    # Mở cửa sổ để chọn file âm thanh
-    filename, _ = QFileDialog.getOpenFileName(None, "Select Audio File", "", "Audio Files (*.wav *.mp3)")
-
-    if filename == "":
-        return
-
-    try:
-        # Chuyển đổi file mp3 thành WAV để nhận dạng âm thanh
-        sound = AudioSegment.from_mp3(filename)
-        filename_wav = filename[:-4] + ".wav"
-        sound.export(filename_wav, format="wav")
-
-        # Sử dụng thư viện SpeechRecognition để nhận dạng âm thanh
-        recognizer = sr.Recognizer()
-        with sr.AudioFile(filename_wav) as source:
-            audio_data = recognizer.record(source)
-            text = recognizer.recognize_google(audio_data)
-
-        # Thêm văn bản nhận dạng được vào cuối textEdit
-        self.textEdit.moveCursor(QtGui.QTextCursor.End)
-        self.textEdit.insertPlainText(text)
-
-    except Exception as e:
-        # Nếu có lỗi, thông báo cho người dùng
-        QMessageBox.warning(None, "Error", str(e))
-
 def start_spell_check_timer(self):
     if self.spell_check_checked:
         self.spell_check_timer.start(1000) 
