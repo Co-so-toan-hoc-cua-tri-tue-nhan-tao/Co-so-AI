@@ -179,7 +179,37 @@ def set_dark_mode(self):
     for action in self.toolBar.actions():
         action.setStyleSheet("color: #FFF;")
 
-
+	def send_message(self):
+		user_input = self.chat_input.text().strip()
+		if user_input:
+			try:
+				response = openai.ChatCompletion.create(
+					model="gpt-3.5-turbo-0125",
+					messages=[
+						{"role": "system", "content": "You are a helpful assistant."},
+						{"role": "user", "content": user_input}
+					],
+					max_tokens=1000,
+					api_key=config.API_KEY  # Sử dụng API từ cấu hình
+				)
+				text = response.choices[0].message["content"]
+				self.textEdit.append(f"\nUser: {user_input}\nChatbot: {text}\n")
+				self.chat_input.clear()
+			except AuthenticationError as e:
+				# Hiển thị cảnh báo lỗi
+				QMessageBox.warning(self.centralwidget, 'Authentication Error', str(e))
+				# Yêu cầu nhập API mới
+				api_key, ok = QInputDialog.getItem(self.centralwidget, 'Enter API Key', 
+													'Enter your API key:', self.previous_api_keys, editable=True)
+				if ok:
+					config.API_KEY = api_key
+					if api_key not in self.previous_api_keys:
+						self.previous_api_keys.append(api_key)
+					# Thử lại gửi tin nhắn
+					self.send_message()
+			except Exception as e:
+				# Xử lý các loại lỗi khác nếu cần
+				QMessageBox.warning(self.centralwidget, 'Error', str(e))
 
 def set_light_mode(self):
     self.centralwidget.setStyleSheet("")
