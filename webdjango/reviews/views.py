@@ -284,33 +284,5 @@ def iterate_words(self, text):
                 in_word = False
     if in_word:
         yield start_pos, len(text), text[start_pos:]
-def setup_chatbot_frame(self):
-		self.chatbot_frame = QWidget(self.centralwidget)
-		self.chat_input = QLineEdit(self.chatbot_frame)
-		self.chat_button = QPushButton("Send", self.chatbot_frame)
-		self.api_info_button = QPushButton("API Info", self.chatbot_frame)  # Nút mới
 
-		# Tạo layout chính cho cửa sổ
-		vbox_main = QVBoxLayout()
-		vbox_main.addWidget(self.textEdit)
-
-		# Tạo layout cho khung chat và nút gửi tin nhắn, nhưng ẩn nó ban đầu
-		self.chatbot_frame.hide()
-		hbox_chat = QHBoxLayout()
-		hbox_chat.addWidget(self.chat_input)
-		hbox_chat.addWidget(self.chat_button)
-		hbox_chat.addWidget(self.api_info_button)  # Thêm nút mới vào layout
-		self.chatbot_frame.setLayout(hbox_chat)
-		vbox_main.addWidget(self.chatbot_frame)
-
-		self.horizontalLayout.addLayout(vbox_main)
-
-		# Kết nối sự kiện clicked của nút gửi tin nhắn
-		self.chat_button.clicked.connect(self.send_message)
-
-		# Kết nối sự kiện clicked của nút thông tin API
-		self.api_info_button.clicked.connect(self.show_api_content)
-
-		# Kết nối sự kiện enter của QLineEdit để gửi tin nhắn
-		self.chat_input.returnPressed.connect(self.send_message)
 '''
