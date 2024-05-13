@@ -284,5 +284,10 @@ def iterate_words(self, text):
                 in_word = False
     if in_word:
         yield start_pos, len(text), text[start_pos:]
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "About"))
+        self.label.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><img src=\":/res/icons/text-editor.png\"/></p><p align=\"center\">Awasome Notepad</p></body></html>"))
+        self.label_2.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Author : Team-28-Software-Engineering</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Build Date : 15-5-2024</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Version : 1.0</span></p></body></html>"))
 
 '''
