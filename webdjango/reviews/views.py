@@ -112,11 +112,6 @@ def toggle_mode(self):
     else:  # Nếu đang ở chế độ sáng
         self.setStyleSheet("")  # Đặt lại stylesheet về mặc định
 
-def fontColor(self):
-    color = QtWidgets.QColorDialog.getColor(self.currentFontColor)
-    if color.isValid():
-        self.currentFontColor = color
-        self.textEdit.setTextColor(color)
 
 def highlight(self):
     color = QtWidgets.QColorDialog.getColor(self.currentHighlightColor)
@@ -179,37 +174,6 @@ def set_dark_mode(self):
     for action in self.toolBar.actions():
         action.setStyleSheet("color: #FFF;")
 
-	def send_message(self):
-		user_input = self.chat_input.text().strip()
-		if user_input:
-			try:
-				response = openai.ChatCompletion.create(
-					model="gpt-3.5-turbo-0125",
-					messages=[
-						{"role": "system", "content": "You are a helpful assistant."},
-						{"role": "user", "content": user_input}
-					],
-					max_tokens=1000,
-					api_key=config.API_KEY  # Sử dụng API từ cấu hình
-				)
-				text = response.choices[0].message["content"]
-				self.textEdit.append(f"\nUser: {user_input}\nChatbot: {text}\n")
-				self.chat_input.clear()
-			except AuthenticationError as e:
-				# Hiển thị cảnh báo lỗi
-				QMessageBox.warning(self.centralwidget, 'Authentication Error', str(e))
-				# Yêu cầu nhập API mới
-				api_key, ok = QInputDialog.getItem(self.centralwidget, 'Enter API Key', 
-													'Enter your API key:', self.previous_api_keys, editable=True)
-				if ok:
-					config.API_KEY = api_key
-					if api_key not in self.previous_api_keys:
-						self.previous_api_keys.append(api_key)
-					# Thử lại gửi tin nhắn
-					self.send_message()
-			except Exception as e:
-				# Xử lý các loại lỗi khác nếu cần
-				QMessageBox.warning(self.centralwidget, 'Error', str(e))
 
 def set_light_mode(self):
     self.centralwidget.setStyleSheet("")
@@ -265,7 +229,50 @@ def check_spelling(self):
     # Khôi phục vị trí của con trỏ
     cursor.setPosition(cursor_pos)
 
+class LanguageDialog(QDialog):
+    def __init__(self, current_language_code, target_language_code, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Translate Text")
+        self.current_language_code = current_language_code
+        self.target_language_code = target_language_code
 
+        layout = QVBoxLayout()
+
+        # Label cho ngôn ngữ hiện tại
+        self.current_language_label = QLabel("Current Language:")
+        layout.addWidget(self.current_language_label)
+
+        # Combobox cho ngôn ngữ hiện tại
+        self.current_language_combo = QComboBox()
+        self.current_language_combo.addItem("Auto-detect", "auto")  # Sử dụng "Auto-detect" thay vì "auto"
+        for lang_code, lang_name in LANGUAGES.items():
+            self.current_language_combo.addItem(lang_name, lang_code)
+        self.current_language_combo.setCurrentText("Auto-detect")  # Đặt "Auto-detect" làm giá trị mặc định
+        layout.addWidget(self.current_language_combo)
+
+        # Label cho ngôn ngữ muốn dịch sang
+        self.target_language_label = QLabel("Translate to:")
+        layout.addWidget(self.target_language_label)
+
+        # Combobox cho ngôn ngữ muốn dịch sang
+        self.target_language_combo = QComboBox()
+        for lang_code, lang_name in LANGUAGES.items():
+            self.target_language_combo.addItem(lang_name, lang_code)
+        self.target_language_combo.setCurrentText(LANGUAGES[target_language_code])
+        layout.addWidget(self.target_language_combo)
+
+        # Nút OK
+        self.ok_button = QPushButton("OK")
+        self.ok_button.clicked.connect(self.accept)
+        layout.addWidget(self.ok_button)
+
+        self.setLayout(layout)
+
+    def get_current_language_code(self):
+        return self.current_language_combo.currentData()
+
+    def get_target_language_code(self):
+        return self.target_language_combo.currentData()
 
 def iterate_words(self, text):
     """
